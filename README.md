@@ -1,6 +1,9 @@
 # Dealers Send Texts
 Dealers will send you updates as they make deals, hit product / cash thresholds, and a daily summary. Each option is configurable on a per-dealer basis. Preferences can be adjusted using Mod Manager Phone App, or editing /UserData/DealersSendText.cfg.
 
+- Requires: [MelonLoader](https://melonwiki.xyz/#/). 
+- Recommended: [Mod Manager Phone App](https://www.nexusmods.com/schedule1/mods/397), [Timestamp Text Messages](https://www.nexusmods.com/schedule1/mods/1129)
+
 ## Available Options
 - Send text when deal started
   - Provides customer name, deal location and window, product amount and cost, and straight line distance from current location.
@@ -25,3 +28,6 @@ Dealers will send you updates as they make deals, hit product / cash thresholds,
   - Orange '?!': Product / cash alert
   - Purple List: Daily Summary
 - The color from the icons shows in the text notifications if enabled.
+
+## Source Code
+This program is open source under the MIT license. [Github Repository](https://github.com/GuysWeForgotDre/DealersSendTexts/)
