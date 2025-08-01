@@ -16,8 +16,8 @@
     <ProjectGuid>{51AF033C-2FBA-4FD9-950E-A5FB45E211C4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DealerSendTexts</RootNamespace>
-    <AssemblyName>DealerSendTexts</AssemblyName>
+    <RootNamespace>DealersSendTexts.Source</RootNamespace>
+    <AssemblyName>DealersSendTexts</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -28,7 +28,7 @@
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>8.0</LangVersion>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Il2Cpp|AnyCPU'">
@@ -37,7 +37,7 @@
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>8.0</LangVersion>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Mono|x64'">
@@ -46,7 +46,7 @@
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>8.0</LangVersion>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Il2Cpp|x64'">
@@ -55,10 +55,13 @@
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>8.0</LangVersion>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -102,10 +105,25 @@
     <Reference Include="$(Il2CppPath)\UnityEngine.UIModule.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Source\Patches.cs" />
-    <Compile Include="Source\DealerStats.cs" />
+    <Compile Include="Source\Managers\AlertManager.cs" />
+    <Compile Include="Source\Persistence\SaleData.cs" />
+    <Compile Include="Source\Persistence\ModSaveData.cs" />
+    <Compile Include="Source\Managers\LocationManager.cs" />
+    <Compile Include="Source\Managers\MessageManager.cs" />
+    <Compile Include="Source\Persistence\DealerState.cs" />
+    <Compile Include="Source\Persistence\Serializables.cs" />
+    <Compile Include="Source\Utilities\Patches.cs" />
+    <Compile Include="Source\Managers\DealerManager.cs" />
     <Compile Include="Source\DealersText.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Source\Utilities\Pathing.cs" />
+    <Compile Include="Source\Managers\ContractManager.cs" />
+    <Compile Include="Source\Utilities\Utilties.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CHANGELOG.md" />
+    <None Include="packages.config" />
+    <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
