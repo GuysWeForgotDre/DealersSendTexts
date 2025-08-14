@@ -94,5 +94,7 @@ namespace DealersSendTexts
             if (prefs.GetShowFailure() != EMsg.Disable)
                 MessageManager.Send(contract.Dealer, EIcon.Failure, message, prefs.GetShowFailure() == EMsg.Notify);
         }
+
+        public static void ClearAll() => Completed.Clear();
     }
 }

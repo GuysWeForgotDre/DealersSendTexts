@@ -79,9 +79,7 @@ namespace DealersSendTexts
                 MessageManager.Send(stats.Dealer, EIcon.Failure, failures, notify: false);
             }
 
-            state.DailySales .Clear();
-            state.TodaysSales.Clear();
-            state.Failures   .Clear();
+            state.ClearAll(daily: true);
         }
 
         public static void NPCInjuryAlert(NPC npc, EIcon type)

@@ -66,5 +66,7 @@ namespace DealersSendTexts
             string message   = $"I may be stuck in {dealer.Region} {location}. Most recent deal was {stats.State.MostRecent}.";
             MessageManager.Send(dealer, EIcon.HurtAlert, message, notify);
         }
+
+        public static void ClearAll() => PositionHistory.Clear();
     }
 }

@@ -56,5 +56,16 @@ namespace DealersSendTexts
         }
 
         public static List<Location> All() => Locations;
+
+        public static void ClearAll()
+        {
+            foreach (Location location in Locations)
+            {
+                location.CustomerCount.Clear();
+                location.DealerCount.Clear();
+            }
+
+            Locations.Clear();
+        }
     }
 }

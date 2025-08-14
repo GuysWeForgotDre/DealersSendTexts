@@ -14,5 +14,19 @@ namespace DealersSendTexts
         public HashSet<FailureKey>        Failures    = new HashSet<FailureKey>();
         public List<SaleData>             DailySales  = new List<SaleData>();
         public List<SaleData>             TotalSales  = new List<SaleData>();
+
+        public void ClearAll(bool daily = false)
+        {
+            DailySales .Clear();
+            TodaysSales.Clear();
+            Failures   .Clear();
+
+            if (!daily)
+            {
+                Products  .Clear();
+                RecentSale.Clear();
+                TotalSales.Clear();
+            }
+        }
     }
 }

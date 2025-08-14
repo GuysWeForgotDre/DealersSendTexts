@@ -11,6 +11,7 @@ using ScheduleOne.NPCs;
 using ScheduleOne.Product;
 
 #endif
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,14 +19,14 @@ namespace DealersSendTexts
 {
     public class DealerManager
     {
-        public static Dictionary<string, DealerManager> Dealers = new Dictionary<string, DealerManager>();
+        public static Dictionary<string, DealerManager> Dealers  = new Dictionary<string, DealerManager>();
         public static Dictionary<string, DealerState> StateCache = new Dictionary<string, DealerState>();
+        public static bool CheckStuck;
 
         public Dictionary<string, NPC> Customers = new Dictionary<string, NPC>();
         public Dealer      Dealer;
         public DealerState State;
         public Vector3     Home;
-        public static bool CheckStuck;
         private int        LastPing = -1;
 
         public DealerManager(Dealer dealer)
@@ -116,6 +117,15 @@ namespace DealersSendTexts
             return !string.IsNullOrEmpty(status);
         }
 
+        public static bool IsCartel(Dealer dealer)
+        {
+            if (Application.version.CompareTo("0.4.0") < 0) return false;
+            Type cartelDealer = Type.GetType("CartelDealer");
+            if (cartelDealer is null) return false;
+
+            return cartelDealer.IsInstanceOfType(dealer);
+        }
+
         public static bool CheckPing(Dealer dealer)
         {
             int navigation = DealerPrefs.Prefs(dealer.FirstName).GetINavDeltaTime();
@@ -123,6 +133,18 @@ namespace DealersSendTexts
         }
 
         public static void SetPing(Dealer dealer, int ping) => GetStats(dealer).LastPing = ping;
+
+        public static void ClearAll()
+        {
+            foreach (DealerManager stats in Dealers.Values)
+            {
+                stats.Customers.Clear();
+                stats.State.ClearAll();
+            }
+
+            Dealers.Clear();
+            StateCache.Clear();
+        }
 
         public Vector3 DistanceToHome() => Dealer.Home.GetClosestDoor(Dealer.transform.position, useableOnly: true).AccessPoint.position;
     }

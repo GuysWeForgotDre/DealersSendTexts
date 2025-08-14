@@ -34,7 +34,7 @@ namespace DealersSendTexts
     {
         static void Postfix(Contract __instance)
         {
-            if (__instance is null || __instance.Dealer is null) return;
+            if (__instance is null || __instance.Dealer is null || DealerManager.IsCartel(__instance.Dealer)) return;
             ContractManager.ProcessContract(__instance, EContract.Started);
         }
     }
@@ -44,7 +44,7 @@ namespace DealersSendTexts
     {
         static void Prefix(Contract __instance)
         {
-            if (__instance is null || __instance.Dealer is null) return;
+            if (__instance is null || __instance.Dealer is null || DealerManager.IsCartel(__instance.Dealer)) return;
             ContractManager.ProcessContract(__instance, EContract.Failure);
         }
     }
@@ -54,7 +54,7 @@ namespace DealersSendTexts
     {
         static void Prefix(Contract __instance)
         {
-            if (__instance is null || __instance.Dealer is null) return;
+            if (__instance is null || __instance.Dealer is null || DealerManager.IsCartel(__instance.Dealer)) return;
             ContractManager.Completed.Add(__instance.Customer.GetComponent<Customer>()?.NPC?.fullName ?? "Unknown");
         }
     }
@@ -64,8 +64,21 @@ namespace DealersSendTexts
     [HarmonyPatch(typeof(Dealer), "Start")]
     public class DealerStartPatch
     {
-        static void Postfix(Dealer __instance) => DealerPrefs.Prefs(__instance.FirstName);
+        static void Postfix(Dealer __instance)
+        {
+            if (__instance is null || DealerManager.IsCartel(__instance)) return;
+            DealerPrefs.Prefs(__instance.FirstName);
+        }
     }
+
+    //LoadManager Patch
+
+    [HarmonyPatch(typeof(LoadManager), nameof(LoadManager.StartGame))]
+    public class LoadManagerStartGamePatch
+    {
+        static void Postfix(SaveInfo info) => ModSaveData.LoadData(info.SavePath);
+    }
+
     //NPC Patches
 
     [HarmonyPatch(typeof(NPC), "Start")]
@@ -93,10 +106,10 @@ namespace DealersSendTexts
         {
             if (__instance is null) return;
 #if Il2Cpp
-            if (!(__instance.npc is null) && __instance.npc is Dealer dealer)
+            if (!(__instance.npc is null) && __instance.npc is Dealer dealer && !DealerManager.IsCartel(dealer))
 #elif Mono
             FieldInfo field = AccessTools.Field(typeof(NPCMovement), "npc");
-            if (field != null && field.GetValue(__instance) is Dealer dealer)
+            if (field != null && field.GetValue(__instance) is Dealer dealer && !DealerManager.IsCartel(dealer))
 #endif
             {
                 EMsg nav = DealerPrefs.Prefs(dealer.FirstName).GetNavigation();
@@ -125,7 +138,7 @@ namespace DealersSendTexts
     [HarmonyPatch(typeof(SaveManager), nameof(SaveManager.Save), new[] { typeof(string) } )]
     public class SaveManagerSavePatch
     {
-        static void Prefix() => ModSaveData.SaveData();
+        static void Prefix(string saveFolderPath) => ModSaveData.SaveData(saveFolderPath);
     }
 
     //TimeManager Patches
@@ -136,12 +149,12 @@ namespace DealersSendTexts
         [HarmonyPostfix]
         public static void PostFix()
         {
-            int time = Util.AbsTime() % 30;
+            int time = Util.AbsTime() % 20;
             if (time == 0 && DealerManager.CheckStuck)
             {
                 DealerManager.CheckStuck = false;
                 foreach (DealerManager stats in DealerManager.Dealers.Values)
-                    Pathing.CheckStuck(DealerManager.GetStats(stats.Dealer));
+                    Pathing.CheckStuck(stats);
             }
 
             if (time == 1) 
