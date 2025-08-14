@@ -1,18 +1,19 @@
 ﻿using MelonLoader;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using DealersSendTexts;
 
-[assembly: MelonInfo(typeof(DealersSendTexts.DealerText), "Dealers Send Texts", "1.0.0", "GuysWeForgotDre")]
+[assembly: MelonInfo(typeof(DealerText), DealerText.ModName, DealerText.Version, "GuysWeForgotDre")]
 [assembly: MelonGame("TVGS", "Schedule I")]
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Dealers Send Texts")]
-[assembly: AssemblyDescription("Dealers text updates on deals and daily summary in Schedule One")]
+[assembly: AssemblyTitle(DealerText.ModName)]
+[assembly: AssemblyDescription(DealerText.ModDesc)]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Dealers Send Texts")]
+[assembly: AssemblyProduct(DealerText.ModName)]
 [assembly: AssemblyCopyright("Copyright ©  2025")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -32,5 +33,5 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion(DealerText.Version + ".0")]
+[assembly: AssemblyFileVersion(DealerText.Version + ".0")]

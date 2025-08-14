@@ -106,7 +106,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Source\Managers\AlertManager.cs" />
-    <Compile Include="Source\Managers\DealerPrefs.cs" />
     <Compile Include="Source\Persistence\SaleData.cs" />
     <Compile Include="Source\Persistence\ModSaveData.cs" />
     <Compile Include="Source\Managers\LocationManager.cs" />

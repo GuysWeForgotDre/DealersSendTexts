@@ -1,0 +1,9 @@
+{
+    "name": "DealersSendTexts",
+    "version_number": "1.2.1",
+    "website_url": "https://github.com/GuysWeForgotDre/DealersSendTexts",
+    "description": "Dealers will send you updates as they make deals, hit product / cash thresholds, and a daily summary.",
+    "dependencies": [
+    "LavaGang-MelonLoader-0.7.0"
+    ]
+}
