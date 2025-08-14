@@ -1,5 +1,11 @@
 # Changelog
 Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/). Adheres to [Semantic Versioning](https://semver.org/).
+## [2.0.0] - 2025-08-13
+### Added
+- Support for Cartel update (gamme v0.4.0 beta) -- ensures methods only grab player dealers and not the cartel's.
+- Separate data per save file.
+### Fixed
+- Better cleanup of data when game unloads, prevent potential issue when switching saves without exiting game.
 ## [1.2.0] - 2025-08-01
 ### Fixed
 - Fixed jars and bricks counting as 1. Dealers now report same total product count as shown in Dealer app.

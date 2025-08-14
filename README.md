@@ -1,7 +1,7 @@
-﻿# Dealers Send Texts
+# Dealers Send Texts
 ![Dealers text you updates as they make deals, hit product / cash thresholds, and a daily summary.](https://github.com/GuysWeForgotDre/DealersSendTexts/blob/main/Images/Message%20Examples.png?raw=true)
 
-Dealers text you updates as they make deals, hit product / cash thresholds, and a daily summary. Also monitors for incapacitated NPCs and dealer pathing issues.
+Dealers text you updates as they make deals, hit product / cash thresholds, and a daily summary. Also monitors for incapacitated NPCs and dealer pathing issues. Supports `v0.4.0 Cartel beta` and `v0.3.6f6 stable`.
 
 Options are configurable globally or on a per-dealer basis. Preferences can be adjusted using Mod Manager Phone App, or editing `/UserData/DealersSendText/Config.cfg`.
 
@@ -12,7 +12,7 @@ Options are configurable globally or on a per-dealer basis. Preferences can be a
 
 ## General Information
 ### Installation
-- Drop the .dll into `/%ScheduleOne Install%/Mods/`.
+- Drop the .dll into `%ScheduleOne Install%/Mods/`.
 - Delete to uninstall.
 ### Features
 - **`Detailed Dealer Tracking`**
@@ -26,7 +26,7 @@ Options are configurable globally or on a per-dealer basis. Preferences can be a
   - Automatically saves running log of all sales by dealer to export / analyze.
   - Includes customer, product, price, location, date, time, and status.
   - Includes cross reference of locations by deal, customer, and dealer.
-  - Data saved to `UserData/DealersSendTexts/DealerData.json`
+  - Data saved to `%Save Directory%/Dealers Send Texts.json`
 - **`Dynamic, Future-Proof Build`**
   - Dealers detected from ScheduleOne.Economy.Dealer class -- automatically compatible with newly added dealers.
   - Minimal patches into game code, mostly custom logic -- low chance to break on game update; easy to fix if it does.
@@ -70,6 +70,12 @@ Options are configurable globally or on a per-dealer basis. Preferences can be a
 ---
 
 ## Reference
+### Update 2.0.0
+- **`Bugs / Fixes`**
+  - Better cleanup of data when game unloads, prevent potential issue when switching saves without exiting game.
+- **`New Features`**
+  - Support for Cartel update (gamme v0.4.0 beta) -- ensures methods only grab player dealers and not the cartel's.
+  - Separate data per save file.
 ### Update 1.2.0
 - **`Bugs / Fixes`**
   - Fixed jars and bricks counting as 1. Dealers now report same total count as shown in Dealer app.
