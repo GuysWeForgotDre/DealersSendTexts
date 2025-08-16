@@ -93,11 +93,6 @@ namespace DealersSendTexts
             dealer.MSGConversation.SendMessage(msg, notify, network: false);
         }
 
-        public static void Icons() => Send(Dealer.AllPlayerDealers[0], EIcon.None, $"{GetIcon(EIcon.Started)} Deal Started\n{GetIcon(EIcon.Success)} Deal Success\n" +
-            $"{GetIcon(EIcon.Failure)} Deal Failure\n{GetIcon(EIcon.Summary)} Daily Summary\n{GetIcon(EIcon.Customer)} Customer List\n" + 
-            $"{GetIcon(EIcon.Location)} Location List\n{GetIcon(EIcon.ProdAlert)} Product Alert\n{GetIcon(EIcon.HurtAlert)} Injury Alert\n" +
-            $"{GetIcon(EIcon.KnockOut)} KnockOut Alert\n{GetIcon(EIcon.HasDied)} Death Alert\n{GetIcon(EIcon.Navigate)} Navigation", false);
-
         private static string GetIcon(EIcon state) => state switch
         {
             EIcon.Started   => " <color=blue><b>▶</b></color> ",

@@ -21,6 +21,7 @@ namespace DealersSendTexts
     {
         public static void DailySummary(DealerManager stats)
         {
+            if (!stats.Dealer.RelationData.Unlocked) return;
             DealerPrefs prefs = DealerPrefs.Prefs(stats.Dealer.FirstName);
             DealerState state = stats.State;
             var products      = new Dictionary<string, int>();

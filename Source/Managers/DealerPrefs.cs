@@ -132,7 +132,6 @@ namespace DealersSendTexts
             return prefs;
         }
 
-        public static void ClearAll() { _dealerSettings.Clear(); Initialized = false; }
         private T GetValue<T>(MelonPreferences_Entry<T> local, MelonPreferences_Entry<T> master) => MasterOnly || !OverrideMaster.Value ? master.Value : local.Value;
     }
 }

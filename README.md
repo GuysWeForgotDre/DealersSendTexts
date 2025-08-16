@@ -70,6 +70,10 @@ Options are configurable globally or on a per-dealer basis. Preferences can be a
 ---
 
 ## Reference
+### Update 2.1.0
+- **`Bugs / Fixes`**
+  - Prevents dealers who are not yet unlocked from sending daily summary texts.
+  - Fix for separate save behavior that could cause log error.
 ### Update 2.0.0
 - **`Bugs / Fixes`**
   - Better cleanup of data when game unloads, prevent potential issue when switching saves without exiting game.

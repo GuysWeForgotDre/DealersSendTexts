@@ -1,4 +1,5 @@
 ﻿using MelonLoader;
+using System;
 
 namespace DealersSendTexts
 {
@@ -11,19 +12,19 @@ namespace DealersSendTexts
 
         public override void OnSceneWasLoaded(int buildIndex, string sceneName)
         {
-            if (sceneName.ToLower() == "main")
+            if (sceneName.Equals("main", StringComparison.OrdinalIgnoreCase))
                 DealerPrefs.Initialize();
         }
+
         public override void OnSceneWasUnloaded(int buildIndex, string sceneName)
         {
-            if (sceneName.ToLower() == "main")
+            if (sceneName.Equals("main", StringComparison.OrdinalIgnoreCase))
             { 
                 ContractManager.ClearAll();
                 LocationManager.ClearAll();
                 DealerManager  .ClearAll();
-                DealerPrefs    .ClearAll();
                 Pathing        .ClearAll();
             }
         }
-    }    
+    }
 }
