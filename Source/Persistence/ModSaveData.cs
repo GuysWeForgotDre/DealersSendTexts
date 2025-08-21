@@ -22,20 +22,27 @@ namespace DealersSendTexts
     [Serializable]
     public class ModSaveData : SaveData
     {
-        public const string PATH = "UserData/DealersSendTexts";
-        public const string DATA = "DealersSendTexts.json";
-        public const string PREFS = "Config.cfg";
+        public const string PATHBASE = "UserData\\DealersSendTexts";
+        public const string DATAFILE = "Data.json";
+        public const string PREFFILE = "Config.cfg";
+
+        private static string _activeSaveDir;
+        private static string _activeSavePath;
+
+        public static string DataPath  => Path.Combine(_activeSavePath ?? PATHBASE, DATAFILE);
+        public static string PrefsPath => Path.Combine(_activeSavePath ?? PATHBASE, PREFFILE);
 
         public Dictionary<string, DealerState> DealerStates = new Dictionary<string, DealerState>();
         public HashSet<string> Completed = new HashSet<string>();
         public List<Location>  Locations = new List<Location>();
 
-        public static void SaveData(string path)
+        public static void SaveData(string pathFromSaver)
         {
-            string name = GetDataFile(path);
-            string dir  = Path.GetDirectoryName(name);
-            if (!Directory.Exists(dir))
-                Directory.CreateDirectory(dir);
+            SetActiveSave(pathFromSaver);
+
+            MelonLogger.Msg($"Attempting to save {DataPath}");
+            if (!Directory.Exists(Path.GetDirectoryName(DataPath)))
+                Directory.CreateDirectory(DataPath);
 
             var saveData = new ModSaveData
             {
@@ -44,25 +51,32 @@ namespace DealersSendTexts
                 Locations    = LocationManager.All(),
             };
 
+            MelonLogger.Msg($"Serializing:");
             try
             {
                 string json = JsonConvert.SerializeObject(saveData, Formatting.Indented);
-                File.WriteAllText(name, json);
+                File.WriteAllText(DataPath, json);
             }
-            catch (Exception ex) { MelonLogger.Error($"[DealersSendTexts] Failed to save to {name}: {ex}"); }
-            MelonLogger.Msg($"[DealersSendTexts] Successfully saved {name}");
+            catch (Exception ex) { MelonLogger.Error($"[DealersSendTexts] Failed to save to {DataPath}: {ex}"); }
+            MelonLogger.Msg($"[DealersSendTexts] Successfully saved {DataPath}");
             MelonLogger.Msg(Application.version);
         }
 
-        public static void LoadData(string path)
+        public static void LoadData(string pathFromLoader)
         {
-            string name = GetDataFile(path);
+            SetActiveSave(pathFromLoader);
+            if (!File.Exists(DataPath))
+            {
+                DealerText.ClearAll();
+                return;
+            }
+
             try
             {
-                if (!File.Exists(name)) return;
+                MelonLogger.Msg($"Loading {DataPath}:");
+                string json  = File.ReadAllText(DataPath);
 
-                string json  = File.ReadAllText(name);
-                var saveData = JsonConvert.DeserializeObject<ModSaveData>(json);
+                ModSaveData saveData = JsonConvert.DeserializeObject<ModSaveData>(json);
                 ContractManager.Completed = saveData.Completed;
 
                 foreach (Location loc in saveData.Locations)
@@ -74,12 +88,22 @@ namespace DealersSendTexts
                     else
                         DealerManager.StateCache.Add(kvp.Key, kvp.Value);
             }
-            catch (Exception ex) { MelonLogger.Error($"[DealersSendTexts] Failed to load from {name}: {ex}"); }
-            MelonLogger.Msg($"[DealersSendTexts] Successfully loaded {name}");
+            catch (Exception ex) { MelonLogger.Error($"[DealersSendTexts] Failed to load from {DataPath}: {ex}"); }
+            MelonLogger.Msg($"[DealersSendTexts] Successfully loaded {DataPath}");
         }
 
-        public static string GetConfigFile() => Path.Combine(PATH, PREFS);
-        public static string GetDataFile(string path = "") => Path.Combine(path.Length == 0 
-            ? PersistentSingleton<SaveManager>.Instance.IndividualSavesContainerPath : path, DATA);
+        private static void SetActiveSave(string gamePath)
+        {
+            string path = gamePath;
+            if (string.IsNullOrEmpty(path))
+                path = PersistentSingleton<SaveManager>.Instance.IndividualSavesContainerPath;
+
+            string dir = Directory.Exists(path) ? path : Path.GetDirectoryName(path);
+            string leaf = string.IsNullOrEmpty(dir) ? "Unknown Save" : new DirectoryInfo(dir).Name;
+
+            _activeSaveDir = leaf;
+            _activeSavePath = Path.Combine(PATHBASE, _activeSaveDir);
+            Directory.CreateDirectory(_activeSavePath);
+        }
     }
 }

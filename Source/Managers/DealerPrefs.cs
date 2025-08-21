@@ -125,11 +125,22 @@ namespace DealersSendTexts
             prefs.IsStuckCount.Comment   = "Number of failed checks to send stuck alert (every 20 min) (default 4)";
             prefs.IsStuckRadius.Comment  = "Minimum distance dealer must move to not be considered stuck (default 5)";
             prefs.Navigation.Comment     = "Send a message when setting a new movement destination (default notify)";
-            prefs.Navigation.Comment     = "Minimum cooldown minutes between navigation messages in minutes (default 5)";
+            prefs.NavDeltaTime.Comment   = "Minimum cooldown minutes between navigation messages in minutes (default 5)";
 
-            prefs.DealerGroup.SetFilePath(ModSaveData.GetConfigFile());
+            prefs.DealerGroup.SetFilePath(ModSaveData.PrefsPath);
             _dealerSettings[name] = prefs;
             return prefs;
+        }
+
+        public static void ClearAll()
+        {
+            foreach (DealerPrefs pref in _dealerSettings.Values)
+            {
+                pref.DealerGroup.Entries.Clear();
+                pref.DealerGroup = null;
+            }
+            _dealerSettings.Clear();
+            Initialized = false;
         }
 
         private T GetValue<T>(MelonPreferences_Entry<T> local, MelonPreferences_Entry<T> master) => MasterOnly || !OverrideMaster.Value ? master.Value : local.Value;

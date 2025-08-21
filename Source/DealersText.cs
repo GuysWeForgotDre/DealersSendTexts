@@ -7,7 +7,7 @@ namespace DealersSendTexts
     public class DealerText : MelonMod 
     {
         public const string ModName = "Dealers Send Texts";
-        public const string Version = "2.0.0";
+        public const string Version = "2.1.0";
         public const string ModDesc = "Dealers text updates on deals and daily summary in Schedule One";
 
         public override void OnSceneWasLoaded(int buildIndex, string sceneName)
@@ -19,12 +19,16 @@ namespace DealersSendTexts
         public override void OnSceneWasUnloaded(int buildIndex, string sceneName)
         {
             if (sceneName.Equals("main", StringComparison.OrdinalIgnoreCase))
-            { 
-                ContractManager.ClearAll();
-                LocationManager.ClearAll();
-                DealerManager  .ClearAll();
-                Pathing        .ClearAll();
-            }
+                ClearAll();
+        }
+
+        public static void ClearAll()
+        {
+            ContractManager.ClearAll();
+            LocationManager.ClearAll();
+            DealerManager  .ClearAll();
+            DealerPrefs    .ClearAll();
+            Pathing        .ClearAll();
         }
     }
 }
