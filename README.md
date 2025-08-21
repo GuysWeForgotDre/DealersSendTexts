@@ -3,7 +3,7 @@
 
 Dealers text you updates as they make deals, hit product / cash thresholds, and a daily summary. Also monitors for incapacitated NPCs and dealer pathing issues. Supports `v0.4.0 Cartel beta` and `v0.3.6f6 stable`.
 
-Options are configurable globally or on a per-dealer basis. Preferences can be adjusted using Mod Manager Phone App, or editing `/UserData/DealersSendText/Config.cfg`.
+Options are configurable globally or on a per-dealer basis. Preferences can be adjusted using Mod Manager Phone App, or editing `/UserData/DealersSendText/SaveGame_#/Config.cfg`.
 
 - **Requires:** [MelonLoader](https://melonwiki.xyz/#/)
 - **Recommended:** [Mod Manager Phone App](https://www.nexusmods.com/schedule1/mods/397) | [Timestamp Text Messages](https://thunderstore.io/schedule-i/p/Dre/Timestamp_Texts)
@@ -26,7 +26,7 @@ Options are configurable globally or on a per-dealer basis. Preferences can be a
   - Automatically saves running log of all sales by dealer to export / analyze.
   - Includes customer, product, price, location, date, time, and status.
   - Includes cross reference of locations by deal, customer, and dealer.
-  - Data saved to `%Save Directory%/Dealers Send Texts.json`
+  - Data saved to `/UserData/DealersSendText/SaveGame_#/Data.json`
 - **`Dynamic, Future-Proof Build`**
   - Dealers detected from ScheduleOne.Economy.Dealer class -- automatically compatible with newly added dealers.
   - Minimal patches into game code, mostly custom logic -- low chance to break on game update; easy to fix if it does.
@@ -70,6 +70,11 @@ Options are configurable globally or on a per-dealer basis. Preferences can be a
 ---
 
 ## Reference
+### Update 2.2.0
+- **`Bugs / Fixes`**
+  - Fixed an issue where data wasn't being preserved in save file directory, now saves to UserData/ instead.
+- **`New Features`**
+  - Preferences are set and saved on a per-game basis, in the same directory as dealer data.
 ### Update 2.1.0
 - **`Bugs / Fixes`**
   - Prevents dealers who are not yet unlocked from sending daily summary texts.

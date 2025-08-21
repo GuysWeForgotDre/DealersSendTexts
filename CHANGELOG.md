@@ -1,5 +1,10 @@
 # Changelog
 Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/). Adheres to [Semantic Versioning](https://semver.org/).
+## [2.2.0] - 2025-08-21
+### Added
+  - Preferences are set and saved on a per-game basis, in the same directory as dealer data.
+### Fixed
+  - Fixed an issue where data wasn't being preserved in save file directory, now saves to UserData/ instead.
 ## [2.1.0] - 2025-08-16
 ### Fixed
 - Prevents dealers who are not yet unlocked from sending daily summary texts.
